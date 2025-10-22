@@ -10,12 +10,14 @@ import {
 import { api } from "../lib/axios.ts";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { Eye, EyeOff } from "lucide-react";
 
 const AuthPage = () => {
   const [showLogin, setShowLogin] = useState(true);
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   // Dynamic schema switching
   const schema = !showLogin ? signupSchema : loginSchema;
 
@@ -104,16 +106,23 @@ const AuthPage = () => {
           )}
         </div>
 
-        <div>
+        <div className="relative">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Password
           </label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"} // <-- toggle type
             {...register("password")}
             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
             placeholder="••••••••"
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-[42px] text-gray-500"
+          >
+            {showPassword ? <EyeOff size="20" /> : <Eye size="20" />}
+          </button>
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">
               {errors.password.message as string}
