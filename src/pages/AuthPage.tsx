@@ -23,7 +23,7 @@ const AuthPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData | SignupFormData>({
+  } = useForm<SignupFormData | LoginFormData>({
     resolver: zodResolver(schema),
   });
 
@@ -79,9 +79,9 @@ const AuthPage = () => {
               className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
               placeholder="John Doe"
             />
-            {errors.name && (
+            {!showLogin && "name" in errors && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.name.message as string}
+                {errors.name?.message as string}
               </p>
             )}
           </div>
